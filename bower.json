@@ -1,0 +1,25 @@
+{
+  "name": "fly",
+  "description": "ArcGIS Fly",
+  "main": "index.js",
+  "authors": [
+    "andrew wang"
+  ],
+  "license": "ISC",
+  "moduleType": [],
+  "homepage": "",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests",
+    "public/bower_components"
+  ],
+  "dependencies": {
+    "dojo": "dojo/dojo#~1.10.4",
+    "dojox": "dojo/dojox#~1.10.4",
+    "dijit": "dojo/dijit#~1.10.4",
+    "requirejs": "~2.1.22"
+  }
+}

@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-type" content="text/html; charset=utf-8">
+  <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no">
+  <title>TypeScript Map demo</title>
+
+    <link rel="stylesheet" href="https://js.arcgis.com/4.0beta3/esri/css/main.css">
+  <style>
+    html,
+    body {
+      padding: 0;
+      margin: 0;
+    }
+  </style>
+  <script src="/bower_components/requirejs/require.js"></script>
+  <script>
+  requirejs.config({
+    packages: [
+      {name: "dojo", location: "/bower_components/dojo"},
+      {name: "dojox", location: "/bower_components/dojox"},
+      {name: "dijit", location: "/bower_components/dijit"},
+      {name: "esri", location: "https://js.arcgis.com/4.0beta3/esri"}
+    ],
+    deps: ['/libs/index/index.js']
+  })
+
+  </script>
+</head>
+<body>
+  <div id="viewDiv"></div>
+</body>
+</html>

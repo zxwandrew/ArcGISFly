@@ -1,0 +1,36 @@
+{
+  "name": "fly",
+  "version": "1.0.0",
+  "description": "ArcGIS Fly",
+  "scripts": {
+    "test": "node ./bin/www"
+  },
+  "author": "andrew wang",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.13.3",
+    "cookie-parser": "^1.3.3",
+    "express": "^4.13.4",
+    "jade": "^1.11.0",
+    "mobile-detect": "^1.3.1",
+    "morgan": "^1.6.1",
+    "serve-favicon": "^2.3.0"
+  },
+  "devDependencies": {
+    "babel-core": "^6.4.5",
+    "babel-plugin-transform-es2015-modules-amd": "^6.4.3",
+    "babel-preset-es2015": "^6.3.13",
+    "gulp": "^3.9.0",
+    "gulp-babel": "^6.1.1",
+    "gulp-bower": "0.0.11",
+    "gulp-clean": "^0.3.1",
+    "gulp-concat": "^2.6.0",
+    "gulp-livereload": "^3.8.0",
+    "gulp-nodemon": "^2.0.6",
+    "gulp-plumber": "^1.0.0",
+    "gulp-requirejs": "^0.1.3",
+    "gulp-sourcemaps": "^1.6.0",
+    "gulp-usemin": "^0.3.20"
+  },
+  "main": "gulpfile.js"
+}
