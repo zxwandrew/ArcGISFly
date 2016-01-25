@@ -1,4 +1,4 @@
-define(["libs/MapMod/MapMod", "dojo/dom", "dojo/on", "dojo/_base/window", "dojo/query"], function (_MapMod, _dom, _on, _window, _query) {
+define(["libs/MapMod/MapMod", "dojo/dom", "dojo/on", "dojo/_base/window", "dojo/query", "dojo/dom-style"], function (_MapMod, _dom, _on, _window, _query, _domStyle) {
   "use strict";
 
   var _MapMod2 = _interopRequireDefault(_MapMod);
@@ -10,6 +10,8 @@ define(["libs/MapMod/MapMod", "dojo/dom", "dojo/on", "dojo/_base/window", "dojo/
   var _window2 = _interopRequireDefault(_window);
 
   var _query2 = _interopRequireDefault(_query);
+
+  var _domStyle2 = _interopRequireDefault(_domStyle);
 
   function _interopRequireDefault(obj) {
     return obj && obj.__esModule ? obj : {
@@ -34,12 +36,18 @@ define(["libs/MapMod/MapMod", "dojo/dom", "dojo/on", "dojo/_base/window", "dojo/
   ;
   var connId = random();
   var socket = io.connect();
-  _dom2.default.byId("connectionId").innerHTML = connId;
-  socket.emit('create', connId);
+  _dom2.default.byId("connectionId").innerHTML = "<h3>" + connId + "</h3>";
+  var connectionData = {
+    room: connId,
+    type: "computer"
+  };
+  socket.emit('create', connectionData);
   socket.on('message', function (data) {
     console.log("received message from server" + data.message['x']);
   });
-  socket.on('phonconnected', function (data) {
-    dojoQuery("#connectionDiv").style("display", "none");
+  socket.on('alldeviceconnected', function (data) {
+    if (data == "true") {
+      _domStyle2.default.set("connectionDiv", "display", "none");
+    }
   });
 });

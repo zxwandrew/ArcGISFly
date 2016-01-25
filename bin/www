@@ -20,8 +20,20 @@ io.on('connection', function(socket){
   });
 
 
-  socket.on('create', function (room) {
-    socket.join(room);
+  socket.on('create', function (connectionData) {
+    if(connectionData.type=="phone"){
+      if(io.sockets.adapter.rooms[connectionData.room]){
+        socket.join(connectionData.room);
+        //send off notification of connection
+        io.emit('alldeviceconnected', "true");
+      }else{//no such room exists
+        io.emit('alldeviceconnected', "false");
+      }
+
+    }else{
+      socket.join(connectionData.room);
+    }
+
   });
 
 

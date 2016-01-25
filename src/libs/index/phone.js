@@ -15,17 +15,28 @@ submitButton.on("click", function(){
   let connectionId  = dom.byId("connectionId").value
 
   //will need error checking
-  socket.emit('create', connectionId);
+  let connectionData = {room: connectionId, type: "phone"};
+  socket.emit('create', connectionData);
 
-  //display connected
-  dom.byId("connectionStatus").innerHTML="Connected";
+});
 
-  //send mouse movements
-  on(win.doc, touch.move, function(evt){
-      var coord = { 'x' : evt.clientX, "y": evt.clientY};
-      console.log("clicked "+ coord['x']);
-      socket.emit('message', coord);
 
-  });
+socket.on('alldeviceconnected', function(data){
+  if(data == "true"){//if phone connection is successful, remove top bar
+    console.log("connection successful");
 
+    //display connected
+    dom.byId("connectionStatus").innerHTML="Connected";
+
+    //start sending mouse movements
+    on(win.doc, touch.move, function(evt){
+        var coord = { 'x' : evt.clientX, "y": evt.clientY};
+        console.log("clicked "+ coord['x']);
+        socket.emit('message', coord);
+
+    });
+
+  }else{//bad connection string
+    dom.byId("connectionStatus").innerHTML="Invalid Id";
+  }
 })

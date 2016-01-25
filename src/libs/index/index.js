@@ -7,6 +7,7 @@ import dom from "dojo/dom"
 import on from "dojo/on"
 import win from "dojo/_base/window"
 import dojoquery from "dojo/query"
+import domStyle from "dojo/dom-style"
 
 
 function random() {
@@ -20,17 +21,21 @@ function random() {
 let connId = random();
 
 let socket = io.connect();
+dom.byId("connectionId").innerHTML = "<h3>"+connId+"</h3>";
 
-dom.byId("connectionId").innerHTML = connId;
+let connectionData = {room: connId, type: "computer"};
+socket.emit('create', connectionData);
 
-socket.emit('create', connId);
 
 socket.on('message', function(data) {
     console.log("received message from server"+ data.message['x'])
 });
 
-socket.on('phonconnected', function(data){
-  dojoQuery("#connectionDiv").style("display", "none");
+socket.on('alldeviceconnected', function(data){
+  if(data == "true"){//if phone connection is successful, remove top bar
+    // dom.byId("connectionId").
+    domStyle.set("connectionDiv", "display", "none");
+  }
 })
 
 // //send mouse movements
