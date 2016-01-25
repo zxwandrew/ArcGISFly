@@ -10,9 +10,9 @@ router.get('/', function(req, res){
   // console.log( md.userAgent() );
 
   if(md.mobile()){
-    res.sendFile('/index.html', {root:__dirname});
-  }else{
     res.sendFile('/phone.html', {root:__dirname});
+  }else{
+    res.sendFile('/index.html', {root:__dirname});
   }
 });
 

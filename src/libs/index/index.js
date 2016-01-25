@@ -1,47 +1,46 @@
-// import MapMod from "libs/MapMod/MapMod"
-//
-// let mapMod = new MapMod("viewDiv");
+import MapMod from "libs/MapMod/MapMod"
+
+//let mapMod = new MapMod("viewDiv");
 // mapMod.start();
+
+import on from "dojo/on"
+import win from "dojo/_base/window"
 
 
 var socket = io.connect();
 console.log("on page")
 
-socket.emit('setPseudo', 'setPseudomessage');
-socket.emit('message', 'new message');
+function random() {
+  //Generate 5 char long random string for name
+  var text = "";
+  var possible = "abcdefghijklmnopqrstuvwxyz0123456789";
+  for (var i = 0; i < 5; i++)
+    text += possible.charAt(Math.floor(Math.random() * possible.length));
+  return text;
+};
 
+socket.emit('create', random());
+// socket.to('room1').emit('message', 'rooom1message');
+socket.emit('message', 'Room1 message');
+
+// socket.emit('setPseudo', 'setPseudomessage');
+// socket.emit('message', 'new message');
+//
 socket.on('message', function(data) {
     // addMessage(data['message'], data['pseudo']);
-    console.log("received message from server"+ data['message'])
+    console.log("received message from server"+ data.message['x'])
 });
 
-// // var WebSocketClient = require('websocket').client;
-// import WebSocketClient from 'WebSocketClient';
-// WebSocketClient.client;
-// var client = new WebSocketClient();
 
-// client.on('connect', function(connection) {
-//     console.log('WebSocket Client Connected');
-//     connection.on('error', function(error) {
-//         console.log("Connection Error: " + error.toString());
-//     });
-//     connection.on('close', function() {
-//         console.log('echo-protocol Connection Closed');
-//     });
-//     connection.on('message', function(message) {
-//         if (message.type === 'utf8') {
-//             console.log("Received: '" + message.utf8Data + "'");
-//         }
-//     });
-//
-//     function sendNumber() {
-//         if (connection.connected) {
-//             var number = Math.round(Math.random() * 0xFFFFFF);
-//             connection.sendUTF(number.toString());
-//             setTimeout(sendNumber, 1000);
-//         }
-//     }
-//     sendNumber();
-// });
-//
-// client.connect('ws://localhost:8080/', 'echo-protocol');
+
+
+on(win.doc, "mousemove", function(evt){
+    // remove listener after first event
+    //signal.remove();
+    // do something else...
+
+    var coord = { 'x' : evt.x, "y": evt.y};
+    console.log("clicked "+ coord['x']);
+    socket.emit('message', coord);
+
+});

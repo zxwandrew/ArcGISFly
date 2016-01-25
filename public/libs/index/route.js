@@ -14,14 +14,16 @@ var router = _express2.default.Router();
 
 router.get('/', function (req, res) {
   var md = new _mobileDetect2.default(req.headers['user-agent']);
+  console.log(md.mobile());
+  // console.log( md.phone() );
+  // console.log( md.tablet() );
+  // console.log( md.userAgent() );
 
-  if(md.mobile()){
+  if (md.mobile()) {
     res.sendFile('/phone.html', { root: __dirname });
-  }else{
+  } else {
     res.sendFile('/index.html', { root: __dirname });
   }
-
-
 });
 
 module.exports = router;
