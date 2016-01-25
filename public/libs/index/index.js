@@ -1,44 +1,45 @@
-define(["libs/MapMod/MapMod", "dojo/on", "dojo/_base/window"], function (_MapMod, _on, _window) {
-    "use strict";
+define(["libs/MapMod/MapMod", "dojo/dom", "dojo/on", "dojo/_base/window", "dojo/query"], function (_MapMod, _dom, _on, _window, _query) {
+  "use strict";
 
-    var _MapMod2 = _interopRequireDefault(_MapMod);
+  var _MapMod2 = _interopRequireDefault(_MapMod);
 
-    var _on2 = _interopRequireDefault(_on);
+  var _dom2 = _interopRequireDefault(_dom);
 
-    var _window2 = _interopRequireDefault(_window);
+  var _on2 = _interopRequireDefault(_on);
 
-    function _interopRequireDefault(obj) {
-        return obj && obj.__esModule ? obj : {
-            default: obj
-        };
+  var _window2 = _interopRequireDefault(_window);
+
+  var _query2 = _interopRequireDefault(_query);
+
+  function _interopRequireDefault(obj) {
+    return obj && obj.__esModule ? obj : {
+      default: obj
+    };
+  }
+
+  var mapMod = new _MapMod2.default("viewDiv");
+  mapMod.start();
+
+  function random() {
+    var text = "";
+    var possible = "abcdefghijklmnopqrstuvwxyz0123456789";
+
+    for (var i = 0; i < 5; i++) {
+      text += possible.charAt(Math.floor(Math.random() * possible.length));
     }
 
-    var socket = io.connect();
-    console.log("on page");
+    return text;
+  }
 
-    function random() {
-        var text = "";
-        var possible = "abcdefghijklmnopqrstuvwxyz0123456789";
-
-        for (var i = 0; i < 5; i++) {
-            text += possible.charAt(Math.floor(Math.random() * possible.length));
-        }
-
-        return text;
-    }
-
-    ;
-    socket.emit('create', random());
-    socket.emit('message', 'Room1 message');
-    socket.on('message', function (data) {
-        console.log("received message from server" + data.message['x']);
-    });
-    (0, _on2.default)(_window2.default.doc, "mousemove", function (evt) {
-        var coord = {
-            'x': evt.x,
-            "y": evt.y
-        };
-        console.log("clicked " + coord['x']);
-        socket.emit('message', coord);
-    });
+  ;
+  var connId = random();
+  var socket = io.connect();
+  _dom2.default.byId("connectionId").innerHTML = connId;
+  socket.emit('create', connId);
+  socket.on('message', function (data) {
+    console.log("received message from server" + data.message['x']);
+  });
+  socket.on('phonconnected', function (data) {
+    dojoQuery("#connectionDiv").style("display", "none");
+  });
 });

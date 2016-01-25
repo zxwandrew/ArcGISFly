@@ -2,8 +2,36 @@
 <html>
   <head>
     <title>You are a phone</title>
+
+
+      <script src="/bower_components/socket.io-client/socket.io.js"></script>
+      <script src="/bower_components/requirejs/require.js"></script>
+
+    <script>
+    requirejs.config({
+      packages: [
+        {name: "dojo", location: "/bower_components/dojo"},
+        {name: "dojox", location: "/bower_components/dojox"},
+        {name: "dijit", location: "/bower_components/dijit"}
+      ],
+      deps: ['/libs/index/phone.js']
+    })
+
+    </script>
+
   </head>
   <body>
-    <div>"you are a phone"</div>
+
+    <div id="phoneConnectionDiv">
+      <div>Visit this page on your computer, and input the code here:</div>
+      <input type="text" id="connectionId">
+      <button type="button" class="submit-button">Start!</button>
+    </div>
+
+
+    <div id="connectionStatus">
+      Not Connected
+    </div>
+
   </body>
 </html>

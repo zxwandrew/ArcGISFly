@@ -12,6 +12,13 @@
       padding: 0;
       margin: 0;
     }
+    #connectionDiv{
+      height: 60%;
+      position: relative;
+      top: 50%;
+      transform: translateY(-50%);
+    }
+
   </style>
 
   <script src="/bower_components/socket.io-client/socket.io.js"></script>
@@ -31,6 +38,19 @@
   </script>
 </head>
 <body>
-  <div id="viewDiv"></div>
+  <div id="somediv">
+    <div id="text">
+      <h3>Visit this page on your phone, and use the following code:</h3>
+      <div id="connectionId"></div>
+    </div>
+  </div>
+
+  <div id="viewDiv">
+    <!-- <div id="connectionDiv">
+      <h3>Visit this page on your phone, and use the following code:</h3>
+      <div id="connectionId"></div>
+    </div> -->
+  </div>
+
 </body>
 </html>
