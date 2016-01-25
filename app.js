@@ -34,6 +34,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 //using let
 var app = (0, _express2.default)();
+//var io = require('socket.io')(http);
 
 app.set('views', _path2.default.join(__dirname, 'views'));
 app.set('view engine', 'jade');
@@ -44,10 +45,9 @@ app.use(_bodyParser2.default.urlencoded({ extended: false }));
 app.use((0, _cookieParser2.default)());
 app.use(_express2.default.static(_path2.default.join(__dirname, 'public')));
 
-//app.use('/', index);
-// app.use('/users', users);
 app.use(_route2.default);
 
+//error handlings
 app.use(function (req, res, next) {
   var err = new Error('Not Found');
   err.status = 404;

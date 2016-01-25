@@ -1,14 +1,11 @@
-define(["libs/MapMod/MapMod"], function (_MapMod) {
-  "use strict";
+define([], function () {
+    'use strict';
 
-  var _MapMod2 = _interopRequireDefault(_MapMod);
-
-  function _interopRequireDefault(obj) {
-    return obj && obj.__esModule ? obj : {
-      default: obj
-    };
-  }
-
-  var mapMod = new _MapMod2.default("viewDiv");
-  mapMod.start();
+    var socket = io.connect();
+    console.log("on page");
+    socket.emit('setPseudo', 'setPseudomessage');
+    socket.emit('message', 'new message');
+    socket.on('message', function (data) {
+        console.log("received message from server" + data['message']);
+    });
 });

@@ -6,3 +6,20 @@ app.set('port', process.env.PORT || 3000);
 var server = app.listen(app.get('port'), function() {
   console.log('Express server listening on port ' + server.address().port);
 });
+
+var io = require('socket.io')(server);
+
+io.on('connection', function(socket){
+  console.log('a user connected');
+
+  socket.on('setPseudo', function (data) {
+      // socket.set('pseudo', data);
+  });
+  socket.on('message', function (message) {
+      // socket.get('pseudo', function (error, name) {
+          var data = { 'message' : message};
+          socket.emit('message', data);
+          console.log("send this : " + message);
+      // })
+  });
+});

@@ -20,6 +20,7 @@
     "dojo": "dojo/dojo#~1.10.4",
     "dojox": "dojo/dojox#~1.10.4",
     "dijit": "dojo/dijit#~1.10.4",
-    "requirejs": "~2.1.22"
+    "requirejs": "~2.1.22",
+    "socket.io-client": "~1.4.4"
   }
 }
