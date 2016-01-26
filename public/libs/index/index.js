@@ -45,8 +45,17 @@ define(["libs/MapMod/MapMod", "dojo/dom", "dojo/on", "dojo/_base/window", "dojo/
   socket.on('message', function (data) {
     console.log("received message from server" + data.message['x']);
   });
+  socket.on('coordupdate', function (coord) {
+    console.log("received message from server: " + coord.x + ", " + coord.y + ", " + coord.z);
+    var screenCoord = {};
+    screenCoord.x = window.innerWidth - Math.abs(coord.y * window.innerWidth);
+    screenCoord.y = coord.x * window.innerHeight + window.innerHeight / 2;
+    mapMod.rotate(screenCoord);
+  });
   socket.on('alldeviceconnected', function (data) {
     if (data == "true") {
+      mapMod.pan();
+
       _domStyle2.default.set("connectionDiv", "display", "none");
     }
   });

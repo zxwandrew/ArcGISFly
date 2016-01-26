@@ -1,4 +1,4 @@
-define(["exports", "esri/Map", "esri/views/SceneView", "dojo/dom", "dojo/domReady!"], function (exports, _Map, _SceneView, _dom) {
+define(["exports", "esri/Map", "esri/views/SceneView", "dojo/dom", "esri/layers/ArcGISElevationLayer", "dojo/domReady!"], function (exports, _Map, _SceneView, _dom, _ArcGISElevationLayer) {
   "use strict";
 
   Object.defineProperty(exports, "__esModule", {
@@ -11,6 +11,8 @@ define(["exports", "esri/Map", "esri/views/SceneView", "dojo/dom", "dojo/domRead
   var _SceneView2 = _interopRequireDefault(_SceneView);
 
   var _dom2 = _interopRequireDefault(_dom);
+
+  var _ArcGISElevationLayer2 = _interopRequireDefault(_ArcGISElevationLayer);
 
   function _interopRequireDefault(obj) {
     return obj && obj.__esModule ? obj : {
@@ -52,15 +54,42 @@ define(["exports", "esri/Map", "esri/views/SceneView", "dojo/dom", "dojo/domRead
     _createClass(MapMod, [{
       key: "start",
       value: function start() {
-        var map = new _Map2.default({
-          basemap: "streets"
+        this.map = new _Map2.default({
+          basemap: "hybrid"
         });
-        var view = new _SceneView2.default({
+
+        this.view = new _SceneView2.default({
           container: this.viewDiv,
-          map: map,
-          scale: 50000000,
-          center: [-101.17, 21.78]
+          map: this.map,
+          camera: {
+            position: [7.654, 45.919, 5183],
+            tilt: 100,
+            fov: 120
+          }
         });
+
+        //     //Create elevation layer and add to the map
+        // let elevationLayer = new ArcGISElevationLayer({
+        //   url: "https://sampleserver6.arcgisonline.com/arcgis/rest/services/OsoLandslide/OsoLandslide_After_3DTerrain/ImageServer"
+        // });
+        // map.add(elevationLayer);
+
+        this.view.then(function (evt) {
+          console.log("loaded");
+          this.view.navigation.rotate.begin([0, 0], 2);
+        }, function (error) {
+          console.log("error loading");
+        });
+      }
+    }, {
+      key: "rotate",
+      value: function rotate(ScreenCoord) {
+        this.view.navigation.rotate.update([ScreenCoord.x, ScreenCoord.y], 2);
+      }
+    }, {
+      key: "pan",
+      value: function pan() {
+        this.view.navigation.pan.beginContinuous(4);
       }
     }]);
 

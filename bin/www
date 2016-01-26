@@ -19,11 +19,17 @@ io.on('connection', function(socket){
       // })
   });
 
+  socket.on('coordupdate', function (coord) {
+          io.to(coord.room).emit('coordupdate', coord);
+          console.log("send this : " + coord);
+  });
+
 
   socket.on('create', function (connectionData) {
     if(connectionData.type=="phone"){
       if(io.sockets.adapter.rooms[connectionData.room]){
         socket.join(connectionData.room);
+        socket.leave("dummyroom");
         //send off notification of connection
         io.emit('alldeviceconnected', "true");
       }else{//no such room exists
@@ -35,6 +41,10 @@ io.on('connection', function(socket){
     }
 
   });
+
+  socket.on('dummycreate', function(dummyroom){
+    socket.join(dummyroom);
+  })
 
 
 });

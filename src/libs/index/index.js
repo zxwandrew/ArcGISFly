@@ -31,9 +31,20 @@ socket.on('message', function(data) {
     console.log("received message from server"+ data.message['x'])
 });
 
+socket.on('coordupdate', function(coord) {
+    console.log("received message from server: "+ coord.x + ", "+ coord.y + ", "+ coord.z)
+    let screenCoord = {};
+    screenCoord.x = (window.innerWidth)-Math.abs(coord.y*(window.innerWidth));
+    screenCoord.y = coord.x*(window.innerHeight)+(window.innerHeight/2);
+
+    mapMod.rotate(screenCoord);
+
+});
+
 socket.on('alldeviceconnected', function(data){
   if(data == "true"){//if phone connection is successful, remove top bar
     // dom.byId("connectionId").
+    mapMod.pan();
     domStyle.set("connectionDiv", "display", "none");
   }
 })

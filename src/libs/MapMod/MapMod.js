@@ -1,23 +1,52 @@
 import Map from "esri/Map";
 import SceneView from "esri/views/SceneView";
 import dom from 'dojo/dom';
+import ArcGISElevationLayer from "esri/layers/ArcGISElevationLayer";
 import 'dojo/domReady!';
+
 
 export class MapMod{
   constructor(viewDiv){
     this.viewDiv = viewDiv;
   }
   start(){
-    let map = new Map({
-      basemap: "streets"
+    this.map = new Map({
+      basemap: "hybrid"
     });
-    let view = new SceneView({
+
+    this.view = new SceneView({
       container: this.viewDiv,
-      map: map,
-      scale: 50000000,
-      center: [-101.17, 21.78]
+      map: this.map,
+      camera: {
+          position: [7.654, 45.919, 1183],
+          tilt: 100,
+          fov: 120
+        }
     });
+
+    //     //Create elevation layer and add to the map
+    // let elevationLayer = new ArcGISElevationLayer({
+    //   url: "https://sampleserver6.arcgisonline.com/arcgis/rest/services/OsoLandslide/OsoLandslide_After_3DTerrain/ImageServer"
+    // });
+    // map.add(elevationLayer);
+
+    this.view.then(function(evt){
+      console.log("loaded");
+      this.view.navigation.rotate.begin([0,0],2);
+    }, function(error){
+      console.log("error loading")
+    });
+
   }
+
+  rotate(ScreenCoord){
+    this.view.navigation.rotate.update([ScreenCoord.x, ScreenCoord.y], 2);
+  }
+  pan(){
+    this.view.navigation.pan.beginContinuous(4);
+  }
+
+
 }
 
 export { MapMod as default}
