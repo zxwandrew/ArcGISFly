@@ -31,7 +31,7 @@ io.on('connection', function(socket){
         socket.join(connectionData.room);
         socket.leave("dummyroom");
         //send off notification of connection
-        io.emit('alldeviceconnected', "true");
+        io.to(connectionData.room).emit('alldeviceconnected', "true");
       }else{//no such room exists
         io.emit('alldeviceconnected', "false");
       }

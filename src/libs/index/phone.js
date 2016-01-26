@@ -13,7 +13,7 @@ let connectionId
 
 submitButton.on("click", function(){
   // let connectionId = dojoQuery("#connectionId").get("value")
-  connectionId  = dom.byId("connectionId").value
+  connectionId  = dom.byId("connectionId").value.toLowerCase();
 
   //will need error checking
   let connectionData = {room: connectionId, type: "phone"};

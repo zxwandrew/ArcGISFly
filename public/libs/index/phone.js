@@ -22,7 +22,7 @@ define(["dojo/dom", "dojo/on", "dojo/query", "dojo/_base/window", "dojo/touch"],
   var submitButton = (0, _query2.default)(".submit-button");
   var connectionId = undefined;
   submitButton.on("click", function () {
-    connectionId = _dom2.default.byId("connectionId").value;
+    connectionId = _dom2.default.byId("connectionId").value.toLowerCase();
     var connectionData = {
       room: connectionId,
       type: "phone"

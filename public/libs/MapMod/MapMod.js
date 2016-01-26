@@ -62,7 +62,7 @@ define(["exports", "esri/Map", "esri/views/SceneView", "dojo/dom", "esri/layers/
           container: this.viewDiv,
           map: this.map,
           camera: {
-            position: [7.654, 45.919, 5183],
+            position: [7.654, 45.919, 1183],
             tilt: 100,
             fov: 120
           }
