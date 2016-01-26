@@ -13,7 +13,12 @@
       margin: 0;
     }
     #connectionDiv{
-
+      position: absolute;
+      top: 18px;
+      right: 18px;
+      padding: 12px;
+      background-color: rgba(0, 0, 0, 0.5);
+      color: white;
     }
 
   </style>
@@ -23,30 +28,30 @@
 
   <script>
   requirejs.config({
-    packages: [
-      {name: "dojo", location: "/bower_components/dojo"},
-      {name: "dojox", location: "/bower_components/dojox"},
-      {name: "dijit", location: "/bower_components/dijit"},
-      {name: "esri", location: "https://js.arcgis.com/4.0beta3/esri"}
-    ],
+    paths: {
+  "dojo": "//js.arcgis.com/4.0beta3/dojo",
+  "dijit": "//js.arcgis.com/4.0beta3/dijit",
+  "dojox": "//js.arcgis.com/4.0beta3/dojox",
+  "esri": "//js.arcgis.com/4.0beta3/esri"
+},
     deps: ['/libs/index/index.js']
   })
 
   </script>
 </head>
 <body>
-  <div id="connectionDiv">
+  <!-- <div id="connectionDiv">
     <div id="text">
       <h3>Visit this page on your phone, and use the following code:</h3>
       <div id="connectionId"></div>
     </div>
-  </div>
+  </div> -->
 
   <div id="viewDiv">
-    <!-- <div id="connectionDiv">
+    <div id="connectionDiv">
       <h3>Visit this page on your phone, and use the following code:</h3>
       <div id="connectionId"></div>
-    </div> -->
+    </div>
   </div>
 
 </body>

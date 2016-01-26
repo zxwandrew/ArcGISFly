@@ -62,8 +62,8 @@ define(["exports", "esri/Map", "esri/views/SceneView", "dojo/dom", "esri/layers/
           container: this.viewDiv,
           map: this.map,
           camera: {
-            position: [7.654, 45.919, 1183],
-            tilt: 100,
+            position: [7.654, 45.919, 2183],
+            tilt: 90,
             fov: 120
           }
         });
@@ -76,7 +76,7 @@ define(["exports", "esri/Map", "esri/views/SceneView", "dojo/dom", "esri/layers/
 
         this.view.then(function (evt) {
           console.log("loaded");
-          this.view.navigation.rotate.begin([0, 0], 2);
+          evt.navigation.rotate.begin([0, 0], 2);
         }, function (error) {
           console.log("error loading");
         });
@@ -85,6 +85,7 @@ define(["exports", "esri/Map", "esri/views/SceneView", "dojo/dom", "esri/layers/
       key: "rotate",
       value: function rotate(ScreenCoord) {
         this.view.navigation.rotate.update([ScreenCoord.x, ScreenCoord.y], 2);
+        this.view.navigation.pan.beginContinuous(4);
       }
     }, {
       key: "pan",
