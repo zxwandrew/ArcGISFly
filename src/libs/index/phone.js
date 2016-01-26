@@ -28,6 +28,7 @@ socket.on('alldeviceconnected', function(data){
 
     //display connected
     dom.byId("connectionStatus").innerHTML="Connected";
+    dom.byId("container").innerHTML = "Rotate your phone to control the map";
 
     // //start sending mouse movements
     // on(win.doc, touch.move, function(evt){

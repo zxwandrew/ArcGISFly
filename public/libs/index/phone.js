@@ -101,6 +101,7 @@ define(["dojo/dom", "dojo/on", "dojo/query", "dojo/_base/window", "dojo/touch"],
 
       console.log("connection successful");
       _dom2.default.byId("connectionStatus").innerHTML = "Connected";
+      _dom2.default.byId("container").innerHTML = "Rotate your phone to control the map";
       var container = undefined,
           camera = undefined,
           scene = undefined,
