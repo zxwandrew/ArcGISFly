@@ -30,7 +30,7 @@ gulp.task('app', function(){
 
 
 gulp.task('libjs', function(){
-  return gulp.src(["!src/libs/**/*route.js", "src/libs/**/*.js"])
+  return gulp.src(["!src/libs/**/*route.js", "!src/libs/**/dojoConfig.js", "src/libs/**/*.js"])
     .pipe(babel({ "plugins": ["transform-es2015-modules-amd"] }))
     .pipe(gulp.dest('public/libs'))
 })
@@ -42,7 +42,7 @@ gulp.task('libjsroute', function(){
 })
 
 gulp.task('libstatic', function(){
-  return gulp.src(['src/libs/*.jade', 'src/libs/**/*.html'])
+  return gulp.src(['src/libs/*.jade', 'src/libs/**/*.html', "src/libs/**/dojoConfig.js",])
     .pipe(gulp.dest('public/libs'))
 })
 

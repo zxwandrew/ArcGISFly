@@ -1,4 +1,4 @@
-import MapMod from "libs/MapMod/MapMod"
+import MapMod from "MapMod/MapMod"
 
 let mapMod = new MapMod("viewDiv");
 mapMod.start();

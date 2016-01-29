@@ -23,30 +23,31 @@
 
   </style>
 
-  <script src="/bower_components/socket.io-client/socket.io.js"></script>
-  <script src="/bower_components/requirejs/require.js"></script>
-
   <script>
-  requirejs.config({
-    paths: {
-  "dojo": "//js.arcgis.com/4.0beta3/dojo",
-  "dijit": "//js.arcgis.com/4.0beta3/dijit",
-  "dojox": "//js.arcgis.com/4.0beta3/dojox",
-  "esri": "//js.arcgis.com/4.0beta3/esri"
-},
-    deps: ['/libs/index/index.js']
-  })
-
+  var dojoConfig = {
+    parseOnLoad: false,
+    packages: [
+        {
+            name: "MapMod",
+            location: "/libs/MapMod"
+        },
+        {
+          name: "Index",
+          location: "/libs/Index",
+          main: "index"
+        }
+    ]
+  };
   </script>
+
+  <script src="/bower_components/socket.io-client/socket.io.js"></script>
+  <script src="https://js.arcgis.com/4.0beta3/"></script>
+  <script>
+   require(['Index'], function (Index) {});
+  </script>
+
 </head>
 <body>
-  <!-- <div id="connectionDiv">
-    <div id="text">
-      <h3>Visit this page on your phone, and use the following code:</h3>
-      <div id="connectionId"></div>
-    </div>
-  </div> -->
-
   <div id="viewDiv">
     <div id="connectionDiv">
       <h3>Visit this page on your phone, and use the following code:</h3>

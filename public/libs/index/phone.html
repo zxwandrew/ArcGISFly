@@ -7,21 +7,29 @@
     <title>ArcGIS Fly Remote</title>
 
 
-      <script src="/bower_components/socket.io-client/socket.io.js"></script>
-      <script src="/bower_components/requirejs/require.js"></script>
-      <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r73/three.min.js"></script>
-      <!-- // <script src="/libs/index/DeviceOrientationControls.js"></script> -->
+    <script>
+    var dojoConfig = {
+      parseOnLoad: true,
+      packages: [
+          {
+            name: "Phone",
+            location: "/libs/Index",
+            main: "phone"
+          },
+          {
+            name: "DeviceOrientationControls",
+            location: "/libs/DeviceOrientationControls"
+          }
+      ]
+    };
+    </script>
+
+    <script src="/bower_components/socket.io-client/socket.io.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r73/three.min.js"></script>
+    <script src="https://js.arcgis.com/4.0beta3/"></script>
 
     <script>
-    requirejs.config({
-      packages: [
-        {name: "dojo", location: "/bower_components/dojo"},
-        {name: "dojox", location: "/bower_components/dojox"},
-        {name: "dijit", location: "/bower_components/dijit"}
-      ],
-      deps: ['/libs/index/phone.js']
-    })
-
+     require(['Phone'], function (Phone) {});
     </script>
 
   </head>

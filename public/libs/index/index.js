@@ -1,4 +1,4 @@
-define(["libs/MapMod/MapMod", "dojo/dom", "dojo/on", "dojo/_base/window", "dojo/query", "dojo/dom-style"], function (_MapMod, _dom, _on, _window, _query, _domStyle) {
+define(["MapMod/MapMod", "dojo/dom", "dojo/on", "dojo/_base/window", "dojo/query", "dojo/dom-style"], function (_MapMod, _dom, _on, _window, _query, _domStyle) {
   "use strict";
 
   var _MapMod2 = _interopRequireDefault(_MapMod);
