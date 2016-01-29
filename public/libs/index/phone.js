@@ -1,4 +1,4 @@
-define(["dojo/dom", "dojo/on", "dojo/query", "dojo/_base/window", "dojo/touch", "dojo/topic", "DeviceOrientationControls/main"], function (_dom, _on, _query, _window, _touch, _topic, _main) {
+define(["dojo/dom", "dojo/on", "dojo/query", "dojo/_base/window", "dojo/touch", "dojo/topic", "DeviceOrientationControls/DeviceOrientationControls"], function (_dom, _on, _query, _window, _touch, _topic, _DeviceOrientationControls) {
   "use strict";
 
   var _dom2 = _interopRequireDefault(_dom);
@@ -13,7 +13,7 @@ define(["dojo/dom", "dojo/on", "dojo/query", "dojo/_base/window", "dojo/touch", 
 
   var _topic2 = _interopRequireDefault(_topic);
 
-  var _main2 = _interopRequireDefault(_main);
+  var _DeviceOrientationControls2 = _interopRequireDefault(_DeviceOrientationControls);
 
   function _interopRequireDefault(obj) {
     return obj && obj.__esModule ? obj : {
@@ -25,6 +25,9 @@ define(["dojo/dom", "dojo/on", "dojo/query", "dojo/_base/window", "dojo/touch", 
   socket.emit('dummycreate', 'dummyrooom');
   var submitButton = (0, _query2.default)(".submit-button");
   var connectionId = undefined;
+  var connectionHandler = undefined;
+  var connectionState = false;
+  var notPausedState = true;
   submitButton.on("click", function () {
     connectionId = _dom2.default.byId("connectionId").value.toLowerCase();
     var connectionData = {
@@ -32,10 +35,13 @@ define(["dojo/dom", "dojo/on", "dojo/query", "dojo/_base/window", "dojo/touch", 
       type: "phone"
     };
     socket.emit('create', connectionData);
+
+    if (connectionState) {}
   });
   socket.on('alldeviceconnected', function (data) {
     if (data == "true") {
       console.log("connection successful");
+      connectionState = true;
       _dom2.default.byId("connectionStatus").innerHTML = "Connected";
       _dom2.default.byId("container").innerHTML = "Rotate your phone to control the map";
       var container = undefined,
@@ -48,11 +54,13 @@ define(["dojo/dom", "dojo/on", "dojo/query", "dojo/_base/window", "dojo/touch", 
           coordTopicHandle = undefined;
       container = document.getElementById('container');
       camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 1, 1100);
-      controls = new _main2.default(camera);
+      controls = new _DeviceOrientationControls2.default(camera);
       coordTopicHandle = _topic2.default.subscribe("coords", function (coords) {
-        console.log(coords);
+        if (connectionState && notPausedState) {
+          coords.room = connectionId;
+          socket.emit("coordupdate", coords);
+        }
       });
-      scene = new THREE.Scene();
     } else {
       _dom2.default.byId("connectionStatus").innerHTML = "Invalid Id";
     }
