@@ -26,9 +26,17 @@ dom.byId("connectionId").innerHTML = "<h3>"+connId+"</h3>";
 let connectionData = {room: connId, type: "computer"};
 socket.emit('create', connectionData);
 
+let speed = 0.01;
 
 socket.on('message', function(data) {
     console.log("received message from server"+ data.message['x'])
+});
+
+socket.on('alldeviceconnected', function(data){
+  if(data == "true"){//if phone connection is successful, remove top bar
+    // mapMod.pan();
+    domStyle.set("connectionDiv", "display", "none");
+  }
 });
 
 socket.on('coordupdate', function(coord) {
@@ -49,14 +57,16 @@ socket.on('coordupdate', function(coord) {
       screenCoord.y = (-1.0*window.innerHeight)-(1.0-(Math.abs(coord.beta)/180.0))*window.innerHeight
     }
 
-    console.log(coord.beta + ", "+ screenCoord.y);
-    mapMod.rotate(screenCoord);
+    console.log(screenCoord.x +", "+ screenCoord.y +" "+ speed);
+    mapMod.rotate(screenCoord, speed);
+    if(speed==0){
+      
+    }
+    //mapMod.changeSpeed(coord.w*4);
 
 });
 
-socket.on('alldeviceconnected', function(data){
-  if(data == "true"){//if phone connection is successful, remove top bar
-    mapMod.pan();
-    domStyle.set("connectionDiv", "display", "none");
-  }
-});
+socket.on('speedupdate', function(speedData){
+  //mapMod.changeSpeed(speedData.speed);
+  speed = speedData.speed;
+})

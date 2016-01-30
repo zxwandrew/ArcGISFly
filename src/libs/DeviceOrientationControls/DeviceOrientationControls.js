@@ -70,7 +70,7 @@ export class DeviceOrientationControls{
 
     //send off to phone.js now
     let coords = {x:  this.object.quaternion.x, y: this.object.quaternion.y, z: this.object.quaternion.z, w: this.object.quaternion.w, alpha: this.deviceOrientation.alpha, beta: this.deviceOrientation.beta, gamma: this.deviceOrientation.gamma, orient: this.screenOrientation};
-    console.log(this.object.quaternion.x +", "+ this.object.quaternion.y +", "+this.object.quaternion.z +", "+this.object.quaternion.w + ","+ this.deviceOrientation.gamma);
+    // console.log(this.object.quaternion.x +", "+ this.object.quaternion.y +", "+this.object.quaternion.z +", "+this.object.quaternion.w + ","+ this.deviceOrientation.gamma);
 
     topic.publish("coords", coords);
   };

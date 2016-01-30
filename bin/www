@@ -24,6 +24,11 @@ io.on('connection', function(socket){
           console.log("send this : " + coord);
   });
 
+  socket.on('speedupdate', function(speed){
+    io.to(speed.room).emit('speedupdate', speed);
+    console.log("speed"+ speed.speed);
+  })
+
 
   socket.on('create', function (connectionData) {
     if(connectionData.type=="phone"){

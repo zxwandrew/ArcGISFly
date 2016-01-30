@@ -49,6 +49,7 @@ define(["exports", "esri/Map", "esri/views/SceneView", "dojo/dom", "esri/layers/
       _classCallCheck(this, MapMod);
 
       this.viewDiv = viewDiv;
+      this.previousSpeed = 0.01;
     }
 
     _createClass(MapMod, [{
@@ -68,12 +69,6 @@ define(["exports", "esri/Map", "esri/views/SceneView", "dojo/dom", "esri/layers/
           }
         });
 
-        //     //Create elevation layer and add to the map
-        // let elevationLayer = new ArcGISElevationLayer({
-        //   url: "https://sampleserver6.arcgisonline.com/arcgis/rest/services/OsoLandslide/OsoLandslide_After_3DTerrain/ImageServer"
-        // });
-        // map.add(elevationLayer);
-
         this.view.then(function (evt) {
           console.log("loaded");
           evt.navigation.rotate.begin([0, 0], 2);
@@ -83,14 +78,37 @@ define(["exports", "esri/Map", "esri/views/SceneView", "dojo/dom", "esri/layers/
       }
     }, {
       key: "rotate",
-      value: function rotate(ScreenCoord) {
-        this.view.navigation.rotate.update([ScreenCoord.x, ScreenCoord.y], 2);
-        this.view.navigation.pan.beginContinuous(4);
+      value: function rotate(ScreenCoord, speed) {
+        // this.view.navigation.rotate.update([ScreenCoord.x, ScreenCoord.y], 2);
+        if (speed == 0) {
+          if (this.previousSpeed == 0) {
+            this.view.navigation.rotate.update([ScreenCoord.x, ScreenCoord.y], 2);
+          } else {
+            this.view.navigation.rotate.update([ScreenCoord.x, 0], 2);
+            this.view.navigation.pan.endContinuous();
+            this.view.navigation.pan.end(0, 0);
+          }
+        } else {
+          this.view.navigation.rotate.update([ScreenCoord.x, ScreenCoord.y], 2);
+          this.view.navigation.pan.beginContinuous(4);
+          this.view.navigation.pan.updateContinuous(speed);
+        }
+        this.previousSpeed = speed;
       }
     }, {
       key: "pan",
       value: function pan() {
         this.view.navigation.pan.beginContinuous(4);
+      }
+    }, {
+      key: "changeSpeed",
+      value: function changeSpeed(speed) {
+        this.view.navigation.pan.updateContinuous(speed);
+      }
+    }, {
+      key: "stopPan",
+      value: function stopPan() {
+        this.view.navigation.pan.endContinuous();
       }
     }]);
 

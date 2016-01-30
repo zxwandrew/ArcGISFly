@@ -42,8 +42,14 @@ define(["MapMod/MapMod", "dojo/dom", "dojo/on", "dojo/_base/window", "dojo/query
     type: "computer"
   };
   socket.emit('create', connectionData);
+  var speed = 0.01;
   socket.on('message', function (data) {
     console.log("received message from server" + data.message['x']);
+  });
+  socket.on('alldeviceconnected', function (data) {
+    if (data == "true") {
+      _domStyle2.default.set("connectionDiv", "display", "none");
+    }
   });
   socket.on('coordupdate', function (coord) {
     var screenCoord = {};
@@ -60,14 +66,12 @@ define(["MapMod/MapMod", "dojo/dom", "dojo/on", "dojo/_base/window", "dojo/query
       screenCoord.y = -1.0 * window.innerHeight - (1.0 - Math.abs(coord.beta) / 180.0) * window.innerHeight;
     }
 
-    console.log(coord.beta + ", " + screenCoord.y);
-    mapMod.rotate(screenCoord);
-  });
-  socket.on('alldeviceconnected', function (data) {
-    if (data == "true") {
-      mapMod.pan();
+    console.log(screenCoord.x + ", " + screenCoord.y + " " + speed);
+    mapMod.rotate(screenCoord, speed);
 
-      _domStyle2.default.set("connectionDiv", "display", "none");
-    }
+    if (speed == 0) {}
+  });
+  socket.on('speedupdate', function (speedData) {
+    speed = speedData.speed;
   });
 });

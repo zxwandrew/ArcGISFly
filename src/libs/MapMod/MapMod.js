@@ -5,9 +5,11 @@ import ArcGISElevationLayer from "esri/layers/ArcGISElevationLayer";
 import 'dojo/domReady!';
 
 
+
 export class MapMod{
   constructor(viewDiv){
     this.viewDiv = viewDiv;
+    this.previousSpeed = 0.01;
   }
   start(){
     this.map = new Map({
@@ -33,15 +35,36 @@ export class MapMod{
 
   }
 
-  rotate(ScreenCoord){
-    this.view.navigation.rotate.update([ScreenCoord.x, ScreenCoord.y], 2);
-    this.view.navigation.pan.beginContinuous(4);
+  rotate(ScreenCoord, speed){
+    // this.view.navigation.rotate.update([ScreenCoord.x, ScreenCoord.y], 2);
+    if(speed==0){
+      if(this.previousSpeed==0){
+        this.view.navigation.rotate.update([ScreenCoord.x, ScreenCoord.y], 2);
+      }else{
+      this.view.navigation.rotate.update([ScreenCoord.x, 0], 2);
+      this.view.navigation.pan.endContinuous();
+      this.view.navigation.pan.end(0,0);
+    }
+    }else{
+      this.view.navigation.rotate.update([ScreenCoord.x, ScreenCoord.y], 2);
+      this.view.navigation.pan.beginContinuous(4);
+      this.view.navigation.pan.updateContinuous(speed)
+    }
+    this.previousSpeed = speed;
 
   }
+
   pan(){
     this.view.navigation.pan.beginContinuous(4);
   }
 
+  changeSpeed(speed){
+    this.view.navigation.pan.updateContinuous(speed)
+  }
+
+  stopPan(){
+    this.view.navigation.pan.endContinuous();
+  }
 
 }
 
