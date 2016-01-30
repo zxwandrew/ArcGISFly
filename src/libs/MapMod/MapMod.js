@@ -24,12 +24,6 @@ export class MapMod{
         }
     });
 
-    //     //Create elevation layer and add to the map
-    // let elevationLayer = new ArcGISElevationLayer({
-    //   url: "https://sampleserver6.arcgisonline.com/arcgis/rest/services/OsoLandslide/OsoLandslide_After_3DTerrain/ImageServer"
-    // });
-    // map.add(elevationLayer);
-
     this.view.then(function(evt){
       console.log("loaded");
       evt.navigation.rotate.begin([0,0],2);

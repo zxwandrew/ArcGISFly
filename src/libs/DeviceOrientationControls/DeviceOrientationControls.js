@@ -55,6 +55,8 @@ export class DeviceOrientationControls{
     let gamma  = this.deviceOrientation.gamma ? THREE.Math.degToRad( this.deviceOrientation.gamma ) : 0; // Y''
     let orient = this.screenOrientation       ? THREE.Math.degToRad( this.screenOrientation       ) : 0; // O
 
+
+
     // this.setObjectQuaternion( this.object.quaternion, alpha, beta, gamma, orient );
     let zee = new THREE.Vector3( 0, 0, 1 );
     let euler = new THREE.Euler();
@@ -67,7 +69,9 @@ export class DeviceOrientationControls{
     this.object.quaternion.multiply( q0.setFromAxisAngle( zee, - orient ) );    // adjust for screen orientation
 
     //send off to phone.js now
-    let coords = {x:  this.object.quaternion.x, y: this.object.quaternion.y, z: this.object.quaternion.z, w: this.object.quaternion.w, alpha: alpha, beta: beta, gamma: gamma, orient: orient};
+    let coords = {x:  this.object.quaternion.x, y: this.object.quaternion.y, z: this.object.quaternion.z, w: this.object.quaternion.w, alpha: this.deviceOrientation.alpha, beta: this.deviceOrientation.beta, gamma: this.deviceOrientation.gamma, orient: this.screenOrientation};
+    console.log(this.object.quaternion.x +", "+ this.object.quaternion.y +", "+this.object.quaternion.z +", "+this.object.quaternion.w + ","+ this.deviceOrientation.gamma);
+
     topic.publish("coords", coords);
   };
 

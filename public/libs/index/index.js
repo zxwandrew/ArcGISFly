@@ -46,10 +46,21 @@ define(["MapMod/MapMod", "dojo/dom", "dojo/on", "dojo/_base/window", "dojo/query
     console.log("received message from server" + data.message['x']);
   });
   socket.on('coordupdate', function (coord) {
-    console.log("received message from server: " + coord.x + ", " + coord.y + ", " + coord.z);
     var screenCoord = {};
-    screenCoord.x = window.innerWidth - Math.abs(coord.y * window.innerWidth);
-    screenCoord.y = coord.x * window.innerHeight + window.innerHeight / 2;
+
+    if (coord.w > 0) {
+      screenCoord.x = 4 * window.innerWidth - 2 * coord.w * window.innerWidth;
+    } else {
+      screenCoord.x = 2 * Math.abs(coord.w) * window.innerWidth;
+    }
+
+    if (coord.beta > -90.0) {
+      screenCoord.y = -1.0 * (coord.beta / 180.0) * window.innerHeight;
+    } else {
+      screenCoord.y = -1.0 * window.innerHeight - (1.0 - Math.abs(coord.beta) / 180.0) * window.innerHeight;
+    }
+
+    console.log(coord.beta + ", " + screenCoord.y);
     mapMod.rotate(screenCoord);
   });
   socket.on('alldeviceconnected', function (data) {

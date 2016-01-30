@@ -24,7 +24,7 @@ define(["dojo/dom", "dojo/on", "dojo/query", "dojo/_base/window", "dojo/touch", 
   var socket = io.connect();
   socket.emit('dummycreate', 'dummyrooom');
   var submitButton = (0, _query2.default)(".submit-button");
-  var connectionId = undefined;
+  var connectionId = "";
   var connectionHandler = undefined;
   var connectionState = false;
   var notPausedState = true;
@@ -40,17 +40,12 @@ define(["dojo/dom", "dojo/on", "dojo/query", "dojo/_base/window", "dojo/touch", 
   });
   socket.on('alldeviceconnected', function (data) {
     if (data == "true") {
-      console.log("connection successful");
       connectionState = true;
       _dom2.default.byId("connectionStatus").innerHTML = "Connected";
       _dom2.default.byId("container").innerHTML = "Rotate your phone to control the map";
       var container = undefined,
           camera = undefined,
-          scene = undefined,
-          renderer = undefined,
           controls = undefined,
-          geometry = undefined,
-          mesh = undefined,
           coordTopicHandle = undefined;
       container = document.getElementById('container');
       camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 1, 1100);

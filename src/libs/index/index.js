@@ -32,27 +32,31 @@ socket.on('message', function(data) {
 });
 
 socket.on('coordupdate', function(coord) {
-    console.log("received message from server: "+ coord.x + ", "+ coord.y + ", "+ coord.z)
-    let screenCoord = {};
-    screenCoord.x = (window.innerWidth)-Math.abs(coord.y*(window.innerWidth));
-    screenCoord.y = coord.x*(window.innerHeight)+(window.innerHeight/2);
+    // console.log(coord.x + ", "+ coord.y + ", "+ coord.z + ", "+ coord.alpha + ", "+ coord.beta + ", "+ coord.gamma + ", "+coord.orient);
+    // console.log(coord.x + ", "+ coord.y + ", "+ coord.z + ", "+ coord.alpha + ", "+coord.w);
 
+    let screenCoord = {};
+
+    if(coord.w>0){//calc the screen coordinate x
+      screenCoord.x = (4*window.innerWidth)-(2*coord.w*window.innerWidth)
+    }else{
+      screenCoord.x = 2*Math.abs(coord.w)*window.innerWidth
+    }
+
+    if(coord.beta>-90.0){//calc the screen coordinate y
+      screenCoord.y = -1.0*(coord.beta/180.0)*window.innerHeight
+    }else{
+      screenCoord.y = (-1.0*window.innerHeight)-(1.0-(Math.abs(coord.beta)/180.0))*window.innerHeight
+    }
+
+    console.log(coord.beta + ", "+ screenCoord.y);
     mapMod.rotate(screenCoord);
 
 });
 
 socket.on('alldeviceconnected', function(data){
   if(data == "true"){//if phone connection is successful, remove top bar
-    // dom.byId("connectionId").
     mapMod.pan();
     domStyle.set("connectionDiv", "display", "none");
   }
-})
-
-// //send mouse movements
-// on(win.doc, "mousemove", function(evt){
-//     var coord = { 'x' : evt.x, "y": evt.y};
-//     console.log("clicked "+ coord['x']);
-//     socket.emit('message', coord);
-//
-// });
+});
