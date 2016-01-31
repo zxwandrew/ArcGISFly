@@ -110,6 +110,15 @@ define(["exports", "esri/Map", "esri/views/SceneView", "dojo/dom", "esri/layers/
       value: function stopPan() {
         this.view.navigation.pan.endContinuous();
       }
+    }, {
+      key: "changeElevation",
+      value: function changeElevation(currentScreenCoord, elevationHeight) {
+        this.view.navigation.pan._panMode = 1;
+        this.view.navigation.pan.begin(currentScreenCoord);
+        this.view.navigation.pan.update([currentScreenCoord[0], elevationHeight]);
+        this.view.navigation.pan.end([currentScreenCoord[0], elevationHeight]);
+        this.view.navigation.pan._panMode = 0;
+      }
     }]);
 
     return MapMod;

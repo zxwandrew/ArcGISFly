@@ -1,4 +1,4 @@
-define(["dojo/dom", "dojo/on", "dojo/query", "dojo/_base/window", "dojo/touch", "dojo/topic", "dijit/form/VerticalSlider", "dojo/parser", "dojox/mobile/Slider", "dojox/mobile", "dojox/mobile/compat", "dojox/mobile/deviceTheme", "DeviceOrientationControls/DeviceOrientationControls"], function (_dom, _on, _query, _window, _touch, _topic, _VerticalSlider, _parser, _Slider, _mobile, _compat, _deviceTheme, _DeviceOrientationControls) {
+define(["dojo/dom", "dojo/on", "dojo/query", "dojo/_base/window", "dojo/touch", "dojo/topic", "dojo/dom-style", "dojo/parser", "dojox/mobile/Slider", "dojox/mobile", "dojox/mobile/deviceTheme", "DeviceOrientationControls/DeviceOrientationControls"], function (_dom, _on, _query, _window, _touch, _topic, _domStyle, _parser, _Slider, _mobile, _deviceTheme, _DeviceOrientationControls) {
   "use strict";
 
   var _dom2 = _interopRequireDefault(_dom);
@@ -13,15 +13,13 @@ define(["dojo/dom", "dojo/on", "dojo/query", "dojo/_base/window", "dojo/touch", 
 
   var _topic2 = _interopRequireDefault(_topic);
 
-  var _VerticalSlider2 = _interopRequireDefault(_VerticalSlider);
+  var _domStyle2 = _interopRequireDefault(_domStyle);
 
   var _parser2 = _interopRequireDefault(_parser);
 
   var _Slider2 = _interopRequireDefault(_Slider);
 
   var _mobile2 = _interopRequireDefault(_mobile);
-
-  var _compat2 = _interopRequireDefault(_compat);
 
   var _deviceTheme2 = _interopRequireDefault(_deviceTheme);
 
@@ -56,13 +54,16 @@ define(["dojo/dom", "dojo/on", "dojo/query", "dojo/_base/window", "dojo/touch", 
   socket.on('alldeviceconnected', function (data) {
     if (data == "true") {
       connectionState = true;
+      _dom2.default.byId("phoneConnectionDiv").innerHTML = "";
       _dom2.default.byId("connectionStatus").innerHTML = "Connected";
       _dom2.default.byId("container").innerHTML = "Rotate your phone to control the map";
 
+      _domStyle2.default.set("controlsContainer", "display", "block");
+
       var speedControlNode = _dom2.default.byId("speedControl");
 
-      var SpeedCOntrolSlider = new _Slider2.default({
-        max: 0.2,
+      var SpeedControlSlider = new _Slider2.default({
+        max: 0.1,
         min: 0,
         orientation: "V",
         step: 0,
@@ -76,7 +77,27 @@ define(["dojo/dom", "dojo/on", "dojo/query", "dojo/_base/window", "dojo/touch", 
           socket.emit("speedupdate", speedData);
         }
       }, speedControlNode).startup();
-      var container = document.getElementById('container');
+
+      var elevationControlNode = _dom2.default.byId("elevationControl");
+
+      var elevationControlSlider = new _Slider2.default({
+        max: 1,
+        min: 0,
+        orientation: "V",
+        step: 0,
+        value: 0.5,
+        onChange: function onChange(value) {
+          console.log(value);
+          var elevationData = {
+            elevation: value,
+            room: connectionId
+          };
+          socket.emit("elevationupdate", elevationData);
+        }
+      }, elevationControlNode).startup();
+
+      var container = _dom2.default.byId('container');
+
       var camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 1, 1100);
       var controls = new _DeviceOrientationControls2.default(camera);
 

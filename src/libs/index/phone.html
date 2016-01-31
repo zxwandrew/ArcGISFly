@@ -8,8 +8,32 @@
 
 
     <style media="screen">
+      #phoneConnectionDiv{
+        text-align: center;
+      }
+      #controlsContainer{
+        position: absolute;
+        margin: 0 auto;
+        width: 100%;
+        display: none;
+      }
+      .control-container{
+        display: inline-block;
+        width: 50%;
+        margin: auto;
+        float: left;
+      }
+      .control-box{
+        margin: auto;
+        display: table;
+      }
       #speedControl{
-        width: 50px;
+        width: 25px;
+        height: 200px;
+        margin: 0, auto;
+      }
+      #elevationControl{
+        width: 20px;
         height: 200px;
         margin: 0, auto;
       }
@@ -43,13 +67,11 @@
   <body>
 
     <div id="phoneConnectionDiv">
-      <div>Visit this page on your computer, and input the code here:</div>
+      <p>Visit this page on your computer, and input the code here:</p>
       <input type="text" id="connectionId">
-      <button type="button" class="submit-button">Start!</button>
+      <button type="submit" class="submit-button">Start!</button>
+      <!-- <input type="submit" id="submitButton" text="Start!">Hi</input> -->
     </div>
-
-     <div id="vertSlider"></div>
-
 
     <div id="connectionStatus">
       Not Connected
@@ -57,7 +79,29 @@
 
     <div id="container"> </div>
 
-    <div id="speedControl"></div>
+    <div id="controlsContainer">
+      <div id="speedControlContainer" class="control-container">
+        <div class="control-box">
+          <div class="control-name">
+            <p>
+              Speed:
+            </p>
+          </div>
+          <div id="speedControl"></div>
+        </div>
+      </div>
+
+      <div id="elevationontrolContainer" class="control-container">
+        <div class="control-box">
+          <div class="control-name">
+            <p>
+              Elevation:
+            </p>
+          </div>
+          <div id="elevationControl"></div>
+      </div>
+      </div>
+    </div>
     <!-- <input id="speedControl" dojoType="dojox.mobile.Slider" value="0.5" min="0" max="3" step="0" data-dojo-type="dojox.mobile.Slider" orientation="H" style="width:150px;"> -->
 
   </body>

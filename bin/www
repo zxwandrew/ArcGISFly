@@ -27,6 +27,10 @@ io.on('connection', function(socket){
   socket.on('speedupdate', function(speed){
     io.to(speed.room).emit('speedupdate', speed);
     console.log("speed"+ speed.speed);
+  });
+
+  socket.on('elevationupdate', function(elevationData){
+    io.to(elevationData.room).emit('elevationupdate', elevationData);
   })
 
 

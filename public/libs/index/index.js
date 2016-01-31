@@ -43,6 +43,7 @@ define(["MapMod/MapMod", "dojo/dom", "dojo/on", "dojo/_base/window", "dojo/query
   };
   socket.emit('create', connectionData);
   var speed = 0.01;
+  var currentScreenCoord = [];
   socket.on('message', function (data) {
     console.log("received message from server" + data.message['x']);
   });
@@ -66,12 +67,18 @@ define(["MapMod/MapMod", "dojo/dom", "dojo/on", "dojo/_base/window", "dojo/query
       screenCoord.y = -1.0 * window.innerHeight - (1.0 - Math.abs(coord.beta) / 180.0) * window.innerHeight;
     }
 
-    console.log(screenCoord.x + ", " + screenCoord.y + " " + speed);
+    currentScreenCoord[0] = screenCoord.x;
+    currentScreenCoord[1] = screenCoord.y;
     mapMod.rotate(screenCoord, speed);
 
     if (speed == 0) {}
   });
   socket.on('speedupdate', function (speedData) {
     speed = speedData.speed;
+  });
+  socket.on('elevationupdate', function (elevationData) {
+    var elevationHeight = (1 - elevationData.elevation / 2) * window.innerHeight;
+    var testcoord = [window.innerWidth / 2, window.innerHeight / 2 + 150];
+    mapMod.changeElevation(testcoord, elevationHeight);
   });
 });

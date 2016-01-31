@@ -27,6 +27,9 @@ let connectionData = {room: connId, type: "computer"};
 socket.emit('create', connectionData);
 
 let speed = 0.01;
+let currentScreenCoord = [];
+
+
 
 socket.on('message', function(data) {
     console.log("received message from server"+ data.message['x'])
@@ -57,10 +60,12 @@ socket.on('coordupdate', function(coord) {
       screenCoord.y = (-1.0*window.innerHeight)-(1.0-(Math.abs(coord.beta)/180.0))*window.innerHeight
     }
 
-    console.log(screenCoord.x +", "+ screenCoord.y +" "+ speed);
+    currentScreenCoord[0]=screenCoord.x;
+    currentScreenCoord[1]=screenCoord.y;
+    // console.log(screenCoord.x +", "+ screenCoord.y +" "+ speed);
     mapMod.rotate(screenCoord, speed);
     if(speed==0){
-      
+
     }
     //mapMod.changeSpeed(coord.w*4);
 
@@ -69,4 +74,11 @@ socket.on('coordupdate', function(coord) {
 socket.on('speedupdate', function(speedData){
   //mapMod.changeSpeed(speedData.speed);
   speed = speedData.speed;
-})
+});
+
+socket.on('elevationupdate', function(elevationData){
+  let elevationHeight = (1-(elevationData.elevation/2))*window.innerHeight;
+  let testcoord = [window.innerWidth/2, window.innerHeight/2+150];
+  // mapMod.changeElevation(currentScreenCoord, elevationHeight);
+  mapMod.changeElevation(testcoord, elevationHeight);
+});

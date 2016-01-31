@@ -66,6 +66,15 @@ export class MapMod{
     this.view.navigation.pan.endContinuous();
   }
 
+  changeElevation(currentScreenCoord, elevationHeight){
+    this.view.navigation.pan._panMode=1;
+    this.view.navigation.pan.begin(currentScreenCoord);
+    this.view.navigation.pan.update([currentScreenCoord[0], elevationHeight]);
+    this.view.navigation.pan.end([currentScreenCoord[0], elevationHeight]);
+    this.view.navigation.pan._panMode=0;
+
+  }
+
 }
 
 export { MapMod as default}
