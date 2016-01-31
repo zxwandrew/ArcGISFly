@@ -65,6 +65,7 @@ socket.on('alldeviceconnected', function(data) {
     dom.byId("connectionStatus").innerHTML = "Connected";
     dom.byId("container").innerHTML = "Rotate your phone to control the map";
     domStyle.set("controlsContainer", "display", "block");
+    domStyle.set("connectionStatus", "background-color", "green");
 
     let speedControlNode = dom.byId("speedControl");
     let SpeedControlSlider = new Slider({

@@ -60,6 +60,8 @@ define(["dojo/dom", "dojo/on", "dojo/query", "dojo/_base/window", "dojo/touch", 
 
       _domStyle2.default.set("controlsContainer", "display", "block");
 
+      _domStyle2.default.set("connectionStatus", "background-color", "green");
+
       var speedControlNode = _dom2.default.byId("speedControl");
 
       var SpeedControlSlider = new _Slider2.default({
