@@ -46,28 +46,41 @@ gulp.task('libstatic', function(){
     .pipe(gulp.dest('public/libs'))
 })
 
+gulp.task('watch', function(){
+  gulp.watch(['src/***/**/*.*', 'src/*.*', 'src/**/*.*'], ['libjs', 'libjsroute', 'libstatic']);
+});
+
 gulp.task('develop', function () {
-  livereload.listen();
+  // livereload.listen();
+  // nodemon({
+  //   script: 'bin/www',
+  //   debug: true,
+  //   ext: 'js',
+  //   stdout: false
+  // }).on('readable', function () {
+  //   this.stdout.on('data', function (chunk) {
+  //     if(/^Express server listening on port/.test(chunk)){
+  //       livereload.changed(__dirname);
+  //     }
+  //   });
+  //   this.stdout.pipe(process.stdout);
+  //   this.stderr.pipe(process.stderr);
+  // });
   nodemon({
     script: 'bin/www',
     debug: true,
     ext: 'js',
-    stdout: false
-  }).on('readable', function () {
-    this.stdout.on('data', function (chunk) {
-      if(/^Express server listening on port/.test(chunk)){
-        livereload.changed(__dirname);
-      }
-    });
-    this.stdout.pipe(process.stdout);
-    this.stderr.pipe(process.stderr);
+    env:{
+      'NODE_ENV': 'development'
+    }
+  })
+  .on('start', ['watch'])
+  .on('change', ['watch'])
+  .on('restart', function(){
+    console.log("restart")
   });
 });
 
 gulp.task('default', [
-  'app',
-  'libjs',
-  'libjsroute',
-  'libstatic',
   'develop'
 ]);

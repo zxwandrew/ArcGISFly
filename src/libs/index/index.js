@@ -29,8 +29,6 @@ socket.emit('create', connectionData);
 let speed = 0.01;
 let currentScreenCoord = [];
 
-
-
 socket.on('message', function(data) {
     console.log("received message from server"+ data.message['x'])
 });
@@ -49,15 +47,15 @@ socket.on('coordupdate', function(coord) {
     let screenCoord = {};
 
     if(coord.w>0){//calc the screen coordinate x
-      screenCoord.x = (4*window.innerWidth)-(2*coord.w*window.innerWidth)
+      screenCoord.x = (4*window.innerWidth)-(2*coord.w*window.innerWidth);
     }else{
-      screenCoord.x = 2*Math.abs(coord.w)*window.innerWidth
+      screenCoord.x = 2*Math.abs(coord.w)*window.innerWidth;
     }
 
     if(coord.beta>-90.0){//calc the screen coordinate y
-      screenCoord.y = -1.0*(coord.beta/180.0)*window.innerHeight
+      screenCoord.y = -1.0*(coord.beta/180.0)*window.innerHeight;
     }else{
-      screenCoord.y = (-1.0*window.innerHeight)-(1.0-(Math.abs(coord.beta)/180.0))*window.innerHeight
+      screenCoord.y = (-1.0*window.innerHeight)-(1.0-(Math.abs(coord.beta)/180.0))*window.innerHeight;
     }
 
     currentScreenCoord[0]=screenCoord.x;

@@ -5,16 +5,11 @@ import favicon      from 'serve-favicon';
 import logger       from 'morgan';
 import cookieParser from 'cookie-parser';
 import bodyParser   from 'body-parser';
-
-
 import index       from './public/libs/index/route.js';
 // import users        from './routes/users'
 
 //using let
 let app = express();
-//var io = require('socket.io')(http);
-
-
 
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
@@ -25,9 +20,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use(index)
-
-
+app.use(index);
 
 //error handlings
 app.use((req, res, next) => {
@@ -44,7 +37,7 @@ if (app.get('env') === 'development') {
       error: err
     });
   });
-}
+};
 
 app.use((err, req, res, next) => {
   res.status(err.status || 500);
