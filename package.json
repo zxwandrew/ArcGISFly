@@ -4,7 +4,7 @@
   "description": "ArcGIS Fly",
   "scripts": {
     "start": "node ./bin/www",
-    "postinstall": "bower install && gulp"
+    "postinstall": "bower install && gulp production"
   },
   "author": "andrew wang",
   "license": "ISC",

@@ -81,6 +81,9 @@ gulp.task('develop', function () {
   });
 });
 
+gulp.task('production', ['libjs', 'libjsroute', 'libstatic']);
+
+
 gulp.task('default', [
   'develop'
 ]);
