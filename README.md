@@ -9,6 +9,10 @@ Meant to be a modular app built on:
 - Socket.io
 - ArcGIS JS API (Dojo)
 
+# Live at:
+ - https://pure-dawn-16123.herokuapp.com/
+ - http://bit.do/arcgisfly
+
 #### To run:
 
 - ```npm install```
