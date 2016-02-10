@@ -1,4 +1,4 @@
-define(["exports", "esri/Map", "esri/views/SceneView", "dojo/dom", "esri/layers/ArcGISElevationLayer", "dojo/domReady!"], function (exports, _Map, _SceneView, _dom, _ArcGISElevationLayer) {
+define(["exports", "esri/Map", "esri/views/SceneView", "dojo/dom", "esri/layers/ArcGISElevationLayer", "esri/layers/SceneLayer", "esri/WebScene", "esri/portal/PortalItem", "dojo/domReady!"], function (exports, _Map, _SceneView, _dom, _ArcGISElevationLayer, _SceneLayer, _WebScene, _PortalItem) {
   "use strict";
 
   Object.defineProperty(exports, "__esModule", {
@@ -13,6 +13,12 @@ define(["exports", "esri/Map", "esri/views/SceneView", "dojo/dom", "esri/layers/
   var _dom2 = _interopRequireDefault(_dom);
 
   var _ArcGISElevationLayer2 = _interopRequireDefault(_ArcGISElevationLayer);
+
+  var _SceneLayer2 = _interopRequireDefault(_SceneLayer);
+
+  var _WebScene2 = _interopRequireDefault(_WebScene);
+
+  var _PortalItem2 = _interopRequireDefault(_PortalItem);
 
   function _interopRequireDefault(obj) {
     return obj && obj.__esModule ? obj : {
@@ -55,15 +61,20 @@ define(["exports", "esri/Map", "esri/views/SceneView", "dojo/dom", "esri/layers/
     _createClass(MapMod, [{
       key: "start",
       value: function start() {
-        this.map = new _Map2.default({
-          basemap: "hybrid"
+        // this.map = new Map({
+        //   basemap: "hybrid"
+        // });
+        this.map = new _WebScene2.default({
+          portalItem: new _PortalItem2.default({
+            id: "1cc9059cdb1f4cabbcc23a97ea23d4c9"
+          })
         });
 
         this.view = new _SceneView2.default({
           container: this.viewDiv,
           map: this.map,
           camera: {
-            position: [7.654, 45.919, 2183],
+            position: [-75.19136110043166, 39.93995470893074, 1000],
             tilt: 90,
             fov: 120
           }
@@ -75,6 +86,12 @@ define(["exports", "esri/Map", "esri/views/SceneView", "dojo/dom", "esri/layers/
         }, function (error) {
           console.log("error loading");
         });
+
+        // //Create SceneLayer and add to the map
+        // this.sceneLayer = new SceneLayer({
+        //   url: "https://scene.arcgis.com/arcgis/rest/services/Hosted/Buildings_Brest/SceneServer/layers/0/"
+        // });
+        // map.add(sceneLayer);
       }
     }, {
       key: "rotate",

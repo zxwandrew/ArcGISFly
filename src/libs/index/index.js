@@ -1,14 +1,12 @@
 import MapMod from "MapMod/MapMod"
-
-let mapMod = new MapMod("viewDiv");
-mapMod.start();
-
 import dom from "dojo/dom"
 import on from "dojo/on"
 import win from "dojo/_base/window"
 import dojoquery from "dojo/query"
 import domStyle from "dojo/dom-style"
 
+let mapMod = new MapMod("viewDiv");
+mapMod.start();
 
 function random() {
   let text = "";

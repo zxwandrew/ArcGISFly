@@ -2,6 +2,9 @@ import Map from "esri/Map";
 import SceneView from "esri/views/SceneView";
 import dom from 'dojo/dom';
 import ArcGISElevationLayer from "esri/layers/ArcGISElevationLayer";
+import SceneLayer from 'esri/layers/SceneLayer';
+import WebScene from 'esri/WebScene';
+import PortalItem from 'esri/portal/PortalItem';
 import 'dojo/domReady!';
 
 
@@ -12,15 +15,20 @@ export class MapMod{
     this.previousSpeed = 0.01;
   }
   start(){
-    this.map = new Map({
-      basemap: "hybrid"
+    // this.map = new Map({
+    //   basemap: "hybrid"
+    // });
+    this.map = new WebScene({
+        portalItem: new PortalItem({
+          id: "1cc9059cdb1f4cabbcc23a97ea23d4c9"
+        })
     });
 
     this.view = new SceneView({
       container: this.viewDiv,
       map: this.map,
       camera: {
-          position: [7.654, 45.919, 2183],
+          position: [-75.19136110043166, 39.93995470893074, 1000],
           tilt: 90,
           fov: 120
         }
@@ -30,9 +38,13 @@ export class MapMod{
       console.log("loaded");
       evt.navigation.rotate.begin([0,0],2);
     }, function(error){
-      console.log("error loading")
+      console.log("error loading");
     });
-
+    // //Create SceneLayer and add to the map
+    // this.sceneLayer = new SceneLayer({
+    //   url: "https://scene.arcgis.com/arcgis/rest/services/Hosted/Buildings_Brest/SceneServer/layers/0/"
+    // });
+    // map.add(sceneLayer);
   }
 
   rotate(ScreenCoord, speed){
